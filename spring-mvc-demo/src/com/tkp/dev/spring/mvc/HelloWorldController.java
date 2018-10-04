@@ -25,7 +25,6 @@ public class HelloWorldController {
 		String result = "Yo! " + theName;
 		model.addAttribute("message", result);
 		return "helloworld";
-		
 	}
 	
 }
