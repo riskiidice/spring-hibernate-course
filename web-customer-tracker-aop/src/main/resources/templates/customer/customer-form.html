@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Form - Customer Management</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+	<div class="container mt-3">
+		<div class="head">
+			<h1>CRM - Customer Form</h1>
+		</div>
+		<hr/>
+		<h3>Save Customer</h3>
+			<form action="#" th:action="@{/customer/saveCustomer}" th:object="${customer}" method="post" class="w-50">
+				<input type="hidden" th:field="*{id}" />
+				<div class="form-group">
+				    <label for="firstName">Firstname</label>
+				    <input type="text" class="form-control " th:field="*{firstName}" name="firstName" />
+				  </div>
+				<div class="form-group">
+				    <label for="lastName">Lastname</label>
+				    <input type="text" class="form-control " th:field="*{lastName}" name="lastName"/>
+				  </div>
+				 <div class="form-group">
+				    <label for="email">Email</label>
+				    <input type="text" class="form-control" th:field="*{email}" name="email"/>
+				   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> 
+				  </div>
+				  <button type="submit" class="btn btn-primary btn-block">Submit</button>
+			</form>
+			<br />
+			<a href="/customer/list" class="btn btn-dark">Back to List</a>
+	</div>
+</body>
+</html>
