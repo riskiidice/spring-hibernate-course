@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+ <h1>Welcome to home page</h1>
+ <hr />
+ <p>
+ 	Logged user: <span sec:authentication="name">Bob</span>
+ </p>
+ <p>	Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span></p>
+ <h2 sec:authorize="isAuthenticated()" >Welcome to TKP-DEV Spring Security Project</h2>
+ <form action="#" th:action="@{/logout}" method="post" >
+ 	<input type="submit" value="Logout" />
+ </form>
+</body>
+</html>
