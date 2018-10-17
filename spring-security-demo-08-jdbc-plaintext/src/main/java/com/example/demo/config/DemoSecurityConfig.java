@@ -1,5 +1,8 @@
 package com.example.demo.config;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,26 +15,32 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 @EnableWebSecurity
 public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private DataSource securityDataSource;
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// add our users for in memory authentication 
-		
-		UserBuilder users = User.withDefaultPasswordEncoder();
-		
-		auth.inMemoryAuthentication()
-			.withUser(users.username("amp").password("test123").roles("ADMIN","EMPLOYEE"))
-			.withUser(users.username("mary").password("test123").roles("MANAGER","EMPLOYEE"))
-			.withUser(users.username("susan").password("test123").roles("EMPLOYEE"));
-
+		// use jdbc authentication ...	
+		auth.jdbcAuthentication().dataSource(securityDataSource)
+		  .usersByUsernameQuery(
+		   "select username,password, enabled from user where username=?")
+		  .authoritiesByUsernameQuery(
+		   "select B.username as username, C.name as role from user_role  A"
+		   + "inner join user B on A.user_id = B.id"
+		   + "inner join role C on A.role_id = C.id"
+		   + " where B.username=?");		
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http.authorizeRequests()
+					.antMatchers("/h2-console").permitAll()
 					.antMatchers("/").hasRole("EMPLOYEE")
 					.antMatchers("/leaders/**").hasRole("MANAGERS")
-					.antMatchers("/systems/**").hasRole("ADMIN")
+					.antMatchers("/systems/**").hasRole("ADMIN")				
+				.and().csrf().ignoringAntMatchers("/h2-console/**")//don't apply CSRF protection to /h2-console
+				.and().headers().frameOptions().sameOrigin()//allow use of frame to same origin urls
 				.and()
 				.formLogin()
 					.loginPage("/showMyLoginPage")
