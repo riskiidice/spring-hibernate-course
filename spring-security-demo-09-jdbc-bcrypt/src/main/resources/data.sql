@@ -1,4 +1,4 @@
-insert into user (username, password, enabled) values ('amp', '{noop}test123', true);
+insert into user (username, password, enabled) values ('amp', '{bcrypt}$2a$04$jP7kBGpU5W7OYahmFIEoiuL.wlxDZl6lOR2A7zn1OqndR4sc31ldO', true);
 insert into role(name) values ('ROLE_EMPLOYEE');
 insert into role(name) values ('ROLE_ADMIN');
 insert into role(name) values ('ROLE_MANAGER');

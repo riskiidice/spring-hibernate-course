@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>TKP DEV Leaders Page</title>
+</head>
+<body>
+ <h1>Welcome <span sec:authentication="name">Bob</span> to Leaders page</h1>
+ <hr />
+ <p>
+ 	See you in Brazil ....  for our annual Leader retreat!
+ 	<br />
+ 	Keep trip a secret , don't tell the regular employees Lol
+ </p>
+ <a th:href="@{/}">Back to Homepage</a>
+</body>
+</html>

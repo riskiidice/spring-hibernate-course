@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Custom Login Page</title>
+<style>
+#errors {
+	color: red,
+	font-size: 1.1rem
+}
+</style>
+</head>
+<body>
+<h1>My Custom Login Page</h1>
+<i id="errors" th:if="${(param.error != null)}">
+    Sorry! You entered invalid Username or Password
+</i>
+<form action="#" th:action="@{/authenticateUser}" method="post">
+    <p>
+    	User name: <input type="text" name="username" />
+    </p>
+    <p>
+    	Password: <input type="password" name="password" />
+    </p>
+    <input type="submit" value="Login" />
+</form>
+</body>
+</html>
